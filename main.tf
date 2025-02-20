@@ -170,7 +170,7 @@ resource ibm_is_subnet vpc_subnet_dc1 {
     ibm_is_vpc_address_prefix.address_prefix_dc1, ibm_is_vpc_routing_table_route.routes_dc1
   ]
   for_each =      toset(local.subnets_dc1)
-  name            = "${each.key}-sao1"
+  name            = "${each.key}sao1"
   //public_gateway  = each.key == "public" ? true : false 
   vpc             = ibm_is_vpc.vpc.id
   zone = local.zone1
@@ -185,7 +185,7 @@ resource ibm_is_subnet vpc_subnet_dc2 {
     ibm_is_vpc_address_prefix.address_prefix_dc2, ibm_is_vpc_routing_table_route.routes_dc2
   ]
   for_each =      toset(local.subnets_dc2)
-  name            = "${each.key}-sao2"
+  name            = "${each.key}sao2"
  // public_gateway  = each.key == "public" ? true : false 
   vpc             = ibm_is_vpc.vpc.id
   zone = local.zone2
@@ -200,7 +200,7 @@ resource ibm_is_subnet vpc_subnet_dc3 {
     ibm_is_vpc_address_prefix.address_prefix_dc3, ibm_is_vpc_routing_table_route.routes_dc3
   ]
   for_each =      toset(local.subnets_dc3)
-  name            = "${each.key}-sao3"
+  name            = "${each.key}sao3"
 //public_gateway  = each.key == "public" ? true : false 
   vpc             = ibm_is_vpc.vpc.id
   zone = local.zone3
