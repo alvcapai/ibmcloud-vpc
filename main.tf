@@ -144,25 +144,25 @@ resource "ibm_is_vpc_routing_table_route" "routes_dc2" {
 
 /* Routing table (DC3) */
 
-resource "ibm_is_vpc_routing_table" "routing_table_dc3" {
-  for_each = toset(local.routing_tables_dc3)
-  vpc = ibm_is_vpc.vpc.id
-  name = "routing-table-${split("|",each.key)[0]}${length(split("|",each.key)) > 1 ? format("-%s", split("|",each.key)[1]) : ""}"
-  route_direct_link_ingress = false
-  route_transit_gateway_ingress = false
-  route_vpc_zone_ingress = false
-}
+# resource "ibm_is_vpc_routing_table" "routing_table_dc3" {
+#   for_each = toset(local.routing_tables_dc3)
+#   vpc = ibm_is_vpc.vpc.id
+#   name = "routing-table-${split("|",each.key)[0]}${length(split("|",each.key)) > 1 ? format("-%s", split("|",each.key)[1]) : ""}"
+#   route_direct_link_ingress = false
+#   route_transit_gateway_ingress = false
+#   route_vpc_zone_ingress = false
+# }
 
-resource "ibm_is_vpc_routing_table_route" "routes_dc3" {
-  for_each = local.merged_routes_dc3
-  vpc = ibm_is_vpc.vpc.id
-  routing_table = ibm_is_vpc_routing_table.routing_table_dc3[split("-->",each.key)[0]].routing_table
-  zone = local.zone3
-  name = "custom-route-${replace(replace(split("-->", each.value)[0], ".", "-"), "/", "-")}"
-  destination = split("-->", each.value)[0]
-  action = length(regexall("\\d", split("-->", each.value)[1])) > 0 ? "deliver" : split("-->", each.value)[1]
-  next_hop = length(regexall("\\d", split("-->", each.value)[1])) > 0 ? split("-->", each.value)[1] : "0.0.0.0" // Example value "10.0.0.4"
-}
+# resource "ibm_is_vpc_routing_table_route" "routes_dc3" {
+#   for_each = local.merged_routes_dc3
+#   vpc = ibm_is_vpc.vpc.id
+#   routing_table = ibm_is_vpc_routing_table.routing_table_dc3[split("-->",each.key)[0]].routing_table
+#   zone = local.zone3
+#   name = "custom-route-${replace(replace(split("-->", each.value)[0], ".", "-"), "/", "-")}"
+#   destination = split("-->", each.value)[0]
+#   action = length(regexall("\\d", split("-->", each.value)[1])) > 0 ? "deliver" : split("-->", each.value)[1]
+#   next_hop = length(regexall("\\d", split("-->", each.value)[1])) > 0 ? split("-->", each.value)[1] : "0.0.0.0" // Example value "10.0.0.4"
+# }
 
 /*  Subnet (DC1)*/
 resource ibm_is_subnet vpc_subnet_dc1 {
